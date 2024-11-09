@@ -10,6 +10,7 @@ import {
   TRANSACTION_CATEGORY_LABELS,
   TRANSACTION_PAYMENT_METHOD_LABELS,
 } from "@/app/_constants/transactions";
+import EditTransactionButton from "../_components/edit-transactio-button";
 
 export const TransactionColumns: ColumnDef<Transaction>[] = [
   {
@@ -57,12 +58,10 @@ export const TransactionColumns: ColumnDef<Transaction>[] = [
   {
     accessorKey: "actions",
     header: "Ações",
-    cell: () => {
+    cell: ({ row: { original: transaction } }) => {
       return (
         <div className="flex space-x-1">
-          <Button variant="ghost" size="icon" className="text-muted-foreground">
-            <SquarePen />
-          </Button>
+          <EditTransactionButton transaction={transaction} />
           <Button variant="ghost" size="icon" className="text-muted-foreground">
             <TrashIcon />
           </Button>
