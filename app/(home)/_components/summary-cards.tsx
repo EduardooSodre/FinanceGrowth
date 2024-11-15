@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Card, CardContent, CardHeader } from "@/app/_components/ui/card";
 import {
   PiggyBankIcon,
@@ -5,54 +6,78 @@ import {
   TrendingUpIcon,
   WalletIcon,
 } from "lucide-react";
+import SummaryCard from "./summary-card";
+import { db } from "@/app/_lib/prisma";
 
-const SummarryCards = () => {
+interface SummaryCards {
+  month: string;
+}
+
+const SummaryCards = async ({ month }: SummaryCards) => {
+  const where = {
+    date: {
+      gte: new Date(`2024-${month}-01`),
+      lt: new Date(`2024-${month}-31`),
+    },
+  };
+  const depositsTotal = Number(
+    (
+      await db.transaction.aggregate({
+        where: { ...where, type: "DEPOSIT" },
+        _sum: { amount: true },
+      })
+    )?._sum?.amount,
+  );
+  const investmentsTotal = Number(
+    (
+      await db.transaction.aggregate({
+        where: { ...where, type: "INVESTMENT" },
+        _sum: { amount: true },
+      })
+    )?._sum?.amount,
+  );
+  const expensesTotal = Number(
+    (
+      await db.transaction.aggregate({
+        where: { ...where, type: "EXPENSE" },
+        _sum: { amount: true },
+      })
+    )?._sum?.amount,
+  );
+  const balance = depositsTotal - investmentsTotal - expensesTotal;
   return (
     <div className="space-y-6">
       {/*PRIMEIRO CARD*/}
 
-      <Card>
-        <CardHeader className="flex-row items-center gap-2">
-          <WalletIcon size={16} />
-          <p className="text-wite opacity-70">Saldo</p>
-        </CardHeader>
-        <CardContent>
-          <p className="text-4xl font-bold">R$2.700</p>
-        </CardContent>
-      </Card>
+      <SummaryCard
+        icon={<WalletIcon size={16} />}
+        title="Saldo"
+        amount={balance}
+        size="large"
+      />
 
       {/*OUTROS CARDS*/}
-      <div className="grid grid-cols-3">
-        <Card>
-          <CardHeader>
-            <PiggyBankIcon size={14} />
-            <p className="text-muted-foreground">Investido</p>
-          </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-bold">R$3.500</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <TrendingUpIcon size={14} />
-            <p className="text-muted-foreground">Receita</p>
-          </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-bold">R$8.500</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <TrendingUpDownIcon size={14} />
-            <p className="text-muted-foreground">Despesas</p>
-          </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-bold">R$3.500</p>
-          </CardContent>
-        </Card>
+      <div className="grid grid-cols-3 gap-6">
+        <SummaryCard
+          icon={<PiggyBankIcon size={16} />}
+          title="Investido"
+          amount={investmentsTotal}
+        />
+
+        <SummaryCard
+          icon={<TrendingUpIcon size={16} className="text-primary" />}
+          title="Receita"
+          amount={depositsTotal}
+        />
+
+        <SummaryCard
+          icon={<TrendingUpDownIcon size={16} className="text-red-500" />}
+          title="Despesas"
+          amount={expensesTotal}
+        />
       </div>
     </div>
   );
 };
 
-export default SummarryCards;
+export default SummaryCards;
