@@ -12,7 +12,7 @@ import {
 } from "@/app/_components/ui/dialog";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { BotIcon, Loader2Icon } from "lucide-react";
-import { generateAiReport } from "../_actiond/generate-ai-report";
+import { generateAiReport } from "../_actions/generate-ai-report";
 import { useState } from "react";
 import { ScrollArea } from "@/app/_components/ui/scroll-area";
 import Markdown from "react-markdown";
@@ -55,7 +55,7 @@ const AiReportButton = ({ month, hasPlatinumPlan }: AiReportButtonProps) => {
                 sobre suas finanças.
               </DialogDescription>
             </DialogHeader>
-            <ScrollArea className="prose prose-h3:text-white prose-h4:text-white prose-strong:text-white max-h-[450px] text-white">
+            <ScrollArea className="prose max-h-[450px] text-white prose-h3:text-white prose-h4:text-white prose-strong:text-white">
               <Markdown>{report}</Markdown>
             </ScrollArea>
             <DialogFooter>
