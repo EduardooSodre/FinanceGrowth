@@ -4,6 +4,19 @@ import { db } from "@/app/_lib/prisma";
 import { auth, clerkClient } from "@clerk/nextjs/server";
 import OpenAI from "openai";
 import { GenerateAiReportSchema, generateAiReportSchema } from "./schema";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
+export async function fetchUsers() {
+  try {
+    const users = await prisma.transaction.findMany(); // Substitua "user" pelo nome correto do modelo
+    return users;
+  } catch (error) {
+    console.error("Erro ao buscar usuários:", error);
+    throw error;
+  }
+}
 
 export const generateAiReport = async ({ month }: GenerateAiReportSchema) => {
   generateAiReportSchema.parse({ month });

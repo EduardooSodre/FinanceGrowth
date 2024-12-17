@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "TransactionType" AS ENUM ('DEPOSIT', 'WITHDRAW', 'EXPENSE', 'INVESTMENT');
+CREATE TYPE "TransactionType" AS ENUM ('DEPOSIT', 'EXPENSE', 'INVESTMENT');
 
 -- CreateEnum
 CREATE TYPE "TransactionCategory" AS ENUM ('HOUSING', 'TRANSPORTATION', 'FOOD', 'ENTERTAINMENT', 'HEALTH', 'UTILITY', 'SALARY', 'EDUCATION', 'OTHER');
@@ -16,7 +16,7 @@ CREATE TABLE "Transaction" (
     "category" "TransactionCategory" NOT NULL,
     "paymentMethod" "TransactionPaymentMethod" NOT NULL,
     "date" TIMESTAMP(3) NOT NULL,
-    "created" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updateAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Transaction_pkey" PRIMARY KEY ("id")

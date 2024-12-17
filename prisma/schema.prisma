@@ -15,9 +15,9 @@ model Transaction {
   category      TransactionCategory
   paymentMethod TransactionPaymentMethod
   date          DateTime
+  createdAt     DateTime                 @default(now())
   updateAt      DateTime                 @updatedAt
   userId        String
-  createdAt     DateTime                 @default(now())
 }
 
 enum TransactionType {
