@@ -10,7 +10,7 @@ const prisma = new PrismaClient();
 
 export async function fetchUsers() {
   try {
-    const users = await prisma.transaction.findMany(); // Substitua "user" pelo nome correto do modelo
+    const users = await prisma.transaction.findMany();
     return users;
   } catch (error) {
     console.error("Erro ao buscar usuários:", error);

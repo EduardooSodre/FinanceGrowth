@@ -26,6 +26,7 @@ const SubscriptionPage = async () => {
                 <h2 className="text-center text-2xl font-semibold">
                   Plano Básico
                 </h2>
+                <br />
                 <div className="flex items-center justify-center gap-3">
                   <span className="text-4xl">R$</span>
                   <span className="text-6xl font-semibold">0</span>
@@ -57,8 +58,14 @@ const SubscriptionPage = async () => {
                   Plano Platinum
                 </h2>
                 <div className="flex items-center justify-center gap-3">
+                  <span className="text-center text-sm line-through">
+                    R$ 49,90
+                  </span>
+                  <span className="text-sm text-primary">-40%OFF</span>
+                </div>
+                <div className="flex items-center justify-center gap-3">
                   <span className="text-4xl">R$</span>
-                  <span className="text-6xl font-semibold">49,90</span>
+                  <span className="text-6xl font-semibold">29,94</span>
                   <div className="text-2xl text-muted-foreground">/mês</div>
                 </div>
               </CardHeader>
